@@ -1,0 +1,2 @@
+/Users/Emiaostein/Library/Developer/Xcode/DerivedData/FontsManager-ghxjczcznhaldyaidpvqmrwvpzbo/Build/Products/Debug-iphonesimulator/FontsManager.app
+
