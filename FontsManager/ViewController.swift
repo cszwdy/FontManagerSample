@@ -17,10 +17,42 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
 //        setup()
+        if true {
         let fontFileName = "com.botai.fonts.BanHei"
         let path = NSBundle.mainBundle().pathForResource(fontFileName, ofType: "ttf")!
         let url = NSURL(fileURLWithPath: path)
         FontManager.registerFontAt(url)
+        
+        let fs = FontManager.registeredFamilies()
+        let f = FontManager.registeredFontsBy(fs.first!).first!
+        
+        print(UIFont(name: f, size: 17)?.fontName)
+        
+        let list = FontManager.familiesList()
+        
+        print(list.families?.array)
+        }
+        
+        if true {
+            let fontFileName = "com.botai.fonts.YueHei"
+            let path = NSBundle.mainBundle().pathForResource(fontFileName, ofType: "ttf")!
+            let url = NSURL(fileURLWithPath: path)
+            FontManager.registerFontAt(url)
+            
+            let fs = FontManager.registeredFamilies()
+            let f = FontManager.registeredFontsBy(fs.first!).first!
+            let list = FontManager.familiesList()
+            print("\n")
+            print(list.families?.array)
+        }
+        
+        FontManager.familiesListMoveFrom(1, toIndex: 0)
+        let alist = FontManager.familiesList()
+        print("\n")
+        print("\n")
+        print((alist.families?.array as! [FontFamily]).map {$0.familyName})
+        
+        
     }
     
     func setup() {

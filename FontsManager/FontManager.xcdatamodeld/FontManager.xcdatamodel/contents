@@ -8,7 +8,16 @@
         <attribute name="style" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="version" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="FontFamiliesList" representedClassName=".FontFamiliesList" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="families" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="FontFamily" syncable="YES"/>
+    </entity>
+    <entity name="FontFamily" representedClassName=".FontFamily" syncable="YES">
+        <attribute name="familyName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Font" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="FontFamily" positionX="142" positionY="-117" width="128" height="58"/>
+        <element name="FontFamiliesList" positionX="133" positionY="72" width="128" height="75"/>
     </elements>
 </model>

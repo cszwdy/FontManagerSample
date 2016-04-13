@@ -36,18 +36,6 @@ protocol FontManagerInterface {
 }
 
 class FontManager {
-    /*
-     enum CTFontManagerError : CFIndex {
-     case FileNotFound
-     case InsufficientPermissions
-     case UnrecognizedFormat
-     case InvalidFontData
-     case AlreadyRegistered
-     case NotRegistered
-     case InUse
-     case SystemRequired
-     }
-     */
     
     enum FontManagerError {
         case FileNotFound
@@ -64,6 +52,7 @@ class FontManager {
         case Failture(FontManagerError)
     }
     
+    private static let defaultFontFamiliesListName = "com.botai.deaultFontFamiliesName"
     static let share = FontManager()
     private let record: DataController
     
@@ -88,8 +77,59 @@ class FontManager {
         
     }
     
-    class func registerFontAt(url: NSURL, customInfo: [String: FontInfoAttributes]? = nil) {
+    class func registerFontAt(url: NSURL, customInfo: FontInfoAttributes? = nil) {
         share.registerFontAt(url)
+    }
+    
+    class func registeredFamilies() -> [String] {
+       return share.families()
+        
+    }
+    
+    class func registeredFontsBy(familyName: String) -> [String] {
+        return share.fontsBy(familyName)
+    }
+    
+    class func familiesList() -> FontFamiliesList {
+        return share.familiesList()
+    }
+    
+    class func familiesListMoveFrom(index: Int, toIndex: Int) {
+        share.familiesListMoveFrom(index, toIndex: toIndex)
+    }
+}
+
+// search 
+extension FontManager {
+    
+    private func families() -> [String] {
+        
+        let familiesFetch = NSFetchRequest(entityName: "FontFamily")
+        
+        do {
+           let result = try record.managedObjectContext.executeFetchRequest(familiesFetch) as! [FontFamily]
+            print(result.map {$0.familyName})
+            return result.map {$0.familyName!}
+        } catch {
+            
+            return []
+        }
+    }
+    
+    private func fontsBy(familyName: String) -> [String] {
+        
+        let predicate = NSPredicate(format: "familyName == %@", familyName)
+        let fullNameFetch = NSFetchRequest(entityName: "Font")
+        fullNameFetch.predicate = predicate
+        
+        do {
+            let result = try record.managedObjectContext.executeFetchRequest(fullNameFetch) as! [Font]
+            
+            print(result.map { $0.postscriptName })
+            return result.map { $0.postscriptName! }
+        } catch {
+            return []
+        }
     }
 }
 
@@ -102,7 +142,15 @@ extension FontManager {
         case Failture(ErrorType)
     }
     
-    private func shouldInsertedBy(fullName: String) -> FontManagerInsertResult {
+    private func familiesListMoveFrom(index: Int, toIndex: Int) {
+        let list = familiesList()
+        guard let order = list.families?.mutableCopy() as? NSMutableOrderedSet else { return }
+        order.exchangeObjectAtIndex(index, withObjectAtIndex: toIndex)
+        list.families = order
+        save()
+    }
+    
+    private func shouldInsertFontBy(fullName: String) -> FontManagerInsertResult {
 
         let predicate = NSPredicate(format: "fullName == %@", fullName)
         let fullNameFetch = NSFetchRequest(entityName: "Font")
@@ -119,23 +167,92 @@ extension FontManager {
         }
     }
     
+    private func shouldInsertFamilyBy(familyName: String) -> FontManagerInsertResult {
+        
+        let predicate = NSPredicate(format: "familyName == %@", familyName)
+        let fullNameFetch = NSFetchRequest(entityName: "FontFamily")
+        fullNameFetch.resultType = .CountResultType
+        fullNameFetch.fetchLimit = 1
+        fullNameFetch.predicate = predicate
+        
+        do {
+            let resultCount = try record.managedObjectContext.executeFetchRequest(fullNameFetch).first! as! Int
+            
+            return resultCount > 0 ? .Existed : .ShouldAdd
+        } catch let error {
+            return .Failture(error)
+        }
+    }
+    
     private func beganAdd(info: FontInfoAttributes) {
         
         let fullName = info.fullName
-        let result = shouldInsertedBy(fullName)
+        let familyName = info.familyName
+        let result = shouldInsertFontBy(fullName)
+        let familyResult = shouldInsertFamilyBy(familyName)
         
-        if  case .ShouldAdd = result { add(info) } else { print("not add") }
+        if  case .ShouldAdd = result { addFont(info) } else { print("not add font") }
+        if case .ShouldAdd = familyResult { addFamily(info) } else { print("not add family") }
     }
     
-    private func add(info: FontInfoAttributes) {
+    private func addFont(info: FontInfoAttributes) {
         
         let context = record.managedObjectContext
         guard let entity = NSEntityDescription.entityForName("Font", inManagedObjectContext: context) else { return }
-        
+
         let font = Font(entity: entity, insertIntoManagedObjectContext: context)
         font.congfigWith(info)
         
-        print(" add ")
+        print(" add font")
+    }
+    
+    private func addFamily(info: FontInfoAttributes) {
+        
+        let context = record.managedObjectContext
+        guard let entity = NSEntityDescription.entityForName("FontFamily", inManagedObjectContext: context) else { return }
+        
+        let font = FontFamily(entity: entity, insertIntoManagedObjectContext: context)
+        font.configWith(info)
+        
+        print(" add family")
+        
+        let list = familiesList()
+        if let families = list.families {
+            let order = families.mutableCopy() as! NSMutableOrderedSet
+            order.addObject(font)
+            list.families = order
+        } else {
+            let order = NSOrderedSet(array: [font])
+            list.families = order
+        }
+    }
+    
+    private func familiesList(name: String = FontManager.defaultFontFamiliesListName) -> FontFamiliesList {
+        
+        let predicate = NSPredicate(format: "name == %@", name)
+        let fullNameFetch = NSFetchRequest(entityName: "FontFamiliesList")
+        fullNameFetch.fetchLimit = 1
+        fullNameFetch.predicate = predicate
+        
+        do {
+            let list = try record.managedObjectContext.executeFetchRequest(fullNameFetch) as! [FontFamiliesList]
+            
+            if let alist = list.first {
+                return alist
+            } else {
+                let context = record.managedObjectContext
+                guard let entity = NSEntityDescription.entityForName("FontFamiliesList", inManagedObjectContext: context) else { fatalError() }
+                
+                let font = FontFamiliesList(entity: entity, insertIntoManagedObjectContext: context)
+                font.name = name
+                
+                print(" add list")
+                return font
+            }
+
+        } catch {
+            fatalError()
+        }
     }
     
     private func save() {
@@ -147,9 +264,6 @@ extension FontManager {
             }
         }
     }
-    
-    
-    
 }
 
 
@@ -160,7 +274,7 @@ extension FontManager {
         
     }
     
-    private func registerFontAt(url: NSURL, customInfo: [String: FontInfoAttributes]? = nil) {
+    private func registerFontAt(url: NSURL, customInfo: FontInfoAttributes? = nil) {
         
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(FontManager.notiRegisteredFontsDidChanged(_:)), name: kCTFontManagerRegisteredFontsChangedNotification as String, object: nil)
         
@@ -211,6 +325,12 @@ private extension Font {
        copyRight = info.postscriptName
        style = info.style
        version = info.version
+    }
+}
+
+private extension FontFamily {
+    func configWith(info: FontInfoAttributes) {
+        familyName = info.familyName
     }
 }
 
