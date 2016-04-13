@@ -11,6 +11,11 @@
 		2C0537631CBB50B8002A96F5 /* FontInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0537621CBB50B8002A96F5 /* FontInformation.swift */; };
 		2C0537651CBB5473002A96F5 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0537641CBB5473002A96F5 /* FontManager.swift */; };
 		2C0537671CBB6C0E002A96F5 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 2C0537661CBB6C0E002A96F5 /* Fonts */; };
+		2C23D30F1CBDDF2700756C93 /* com.botai.fonts.YueHei.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C23D30E1CBDDF2700756C93 /* com.botai.fonts.YueHei.ttf */; };
+		2C23D3111CBDE19800756C93 /* com.botai.fonts.BanHei.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C23D3101CBDE19800756C93 /* com.botai.fonts.BanHei.ttf */; };
+		2C23D31C1CBDF2A000756C93 /* FontManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2C23D31A1CBDF2A000756C93 /* FontManager.xcdatamodeld */; };
+		2C23D31F1CBDF32500756C93 /* Font+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C23D31D1CBDF32500756C93 /* Font+CoreDataProperties.swift */; };
+		2C23D3201CBDF32500756C93 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C23D31E1CBDF32500756C93 /* Font.swift */; };
 		2C2432D41CBB3F320073DA5F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2432D31CBB3F320073DA5F /* AppDelegate.swift */; };
 		2C2432D61CBB3F320073DA5F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2432D51CBB3F320073DA5F /* ViewController.swift */; };
 		2C2432D91CBB3F320073DA5F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C2432D71CBB3F320073DA5F /* Main.storyboard */; };
@@ -42,6 +47,11 @@
 		2C0537621CBB50B8002A96F5 /* FontInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontInformation.swift; sourceTree = "<group>"; };
 		2C0537641CBB5473002A96F5 /* FontManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		2C0537661CBB6C0E002A96F5 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		2C23D30E1CBDDF2700756C93 /* com.botai.fonts.YueHei.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = com.botai.fonts.YueHei.ttf; sourceTree = "<group>"; };
+		2C23D3101CBDE19800756C93 /* com.botai.fonts.BanHei.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = com.botai.fonts.BanHei.ttf; sourceTree = "<group>"; };
+		2C23D31B1CBDF2A000756C93 /* FontManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FontManager.xcdatamodel; sourceTree = "<group>"; };
+		2C23D31D1CBDF32500756C93 /* Font+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Font+CoreDataProperties.swift"; path = "../Font+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		2C23D31E1CBDF32500756C93 /* Font.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Font.swift; path = ../Font.swift; sourceTree = "<group>"; };
 		2C2432D01CBB3F320073DA5F /* FontsManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontsManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C2432D31CBB3F320073DA5F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C2432D51CBB3F320073DA5F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -105,10 +115,12 @@
 		2C2432D21CBB3F320073DA5F /* FontsManager */ = {
 			isa = PBXGroup;
 			children = (
+				2C5F1BDA1CBCEEE400F54D47 /* FontManager */,
 				2C0537661CBB6C0E002A96F5 /* Fonts */,
-				2C0537641CBB5473002A96F5 /* FontManager.swift */,
 				2C0537621CBB50B8002A96F5 /* FontInformation.swift */,
 				2C0537601CBB46B7002A96F5 /* com.emiaostein.fonts.zaozigongfang.miaomiao.ttf */,
+				2C23D30E1CBDDF2700756C93 /* com.botai.fonts.YueHei.ttf */,
+				2C23D3101CBDE19800756C93 /* com.botai.fonts.BanHei.ttf */,
 				2C2432D31CBB3F320073DA5F /* AppDelegate.swift */,
 				2C2432D51CBB3F320073DA5F /* ViewController.swift */,
 				2C2432D71CBB3F320073DA5F /* Main.storyboard */,
@@ -135,6 +147,17 @@
 				2C2432F51CBB3F330073DA5F /* Info.plist */,
 			);
 			path = FontsManagerUITests;
+			sourceTree = "<group>";
+		};
+		2C5F1BDA1CBCEEE400F54D47 /* FontManager */ = {
+			isa = PBXGroup;
+			children = (
+				2C0537641CBB5473002A96F5 /* FontManager.swift */,
+				2C23D31D1CBDF32500756C93 /* Font+CoreDataProperties.swift */,
+				2C23D31E1CBDF32500756C93 /* Font.swift */,
+				2C23D31A1CBDF2A000756C93 /* FontManager.xcdatamodeld */,
+			);
+			name = FontManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,10 +264,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C23D3111CBDE19800756C93 /* com.botai.fonts.BanHei.ttf in Resources */,
 				2C0537671CBB6C0E002A96F5 /* Fonts in Resources */,
 				2C2432DE1CBB3F320073DA5F /* LaunchScreen.storyboard in Resources */,
 				2C2432DB1CBB3F320073DA5F /* Assets.xcassets in Resources */,
 				2C0537611CBB4A85002A96F5 /* com.emiaostein.fonts.zaozigongfang.miaomiao.ttf in Resources */,
+				2C23D30F1CBDDF2700756C93 /* com.botai.fonts.YueHei.ttf in Resources */,
 				2C2432D91CBB3F320073DA5F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,7 +297,10 @@
 			files = (
 				2C2432D61CBB3F320073DA5F /* ViewController.swift in Sources */,
 				2C0537631CBB50B8002A96F5 /* FontInformation.swift in Sources */,
+				2C23D3201CBDF32500756C93 /* Font.swift in Sources */,
 				2C0537651CBB5473002A96F5 /* FontManager.swift in Sources */,
+				2C23D31C1CBDF2A000756C93 /* FontManager.xcdatamodeld in Sources */,
+				2C23D31F1CBDF32500756C93 /* Font+CoreDataProperties.swift in Sources */,
 				2C2432D41CBB3F320073DA5F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,6 +547,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2C23D31A1CBDF2A000756C93 /* FontManager.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2C23D31B1CBDF2A000756C93 /* FontManager.xcdatamodel */,
+			);
+			currentVersion = 2C23D31B1CBDF2A000756C93 /* FontManager.xcdatamodel */;
+			path = FontManager.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2C2432C81CBB3F320073DA5F /* Project object */;
 }

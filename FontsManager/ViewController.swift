@@ -16,11 +16,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setup()
+//        setup()
+        let fontFileName = "com.botai.fonts.BanHei"
+        let path = NSBundle.mainBundle().pathForResource(fontFileName, ofType: "ttf")!
+        let url = NSURL(fileURLWithPath: path)
+        FontManager.registerFontAt(url)
     }
     
     func setup() {
-        registerFontsByURLs()
+        registerFont()
     }
     
     func registerFont() {
@@ -33,7 +37,12 @@ class ViewController: UIViewController {
             let ctfont = CTFontCreateWithGraphicsFont(font, 1, nil, nil)
             let familyName = CTFontCopyFamilyName(ctfont)
             let fullName = CTFontCopyFullName(ctfont)
-            print("family: \(familyName) \nname: \(fullName) \nRegister Success.")
+            let displayName = CTFontCopyDisplayName(ctfont)
+            
+            
+            let displayFamilyName = CTFontCopyLocalizedName(ctfont, kCTFontFamilyNameKey, nil)
+            
+            print("displayName: \(displayFamilyName), family: \(NSLocalizedString(familyName as String, comment: "")) \nname: \(fullName) \nRegister Success.")
         } else {
             print("Register Failture.")
         }
@@ -67,9 +76,12 @@ class ViewController: UIViewController {
     }
     
     func fontChangedTo(name: String) {
-        let descriptor = UIFontDescriptor(name: name, matrix: CGAffineTransformIdentity)
+        let descriptor = UIFontDescriptor().fontDescriptorWithFamily(name)
         let font = UIFont(descriptor: descriptor, size: 20)
-        print(font.familyName)
+        let attributes = descriptor.fontAttributes()
+        let displayFamilyName = CTFontCopyLocalizedName(font, kCTFontFamilyNameKey, nil)!
+        
+        print(displayFamilyName as String)
         textView.font = font
     }
     
@@ -83,7 +95,7 @@ extension ViewController {
     
     @IBAction func changeFontClick(sender: AnyObject) {
         
-        let fontName = "MF MiaoMiao (Noncommercial) Regular"
+        let fontName = "MF MiaoMiao (Noncommercial)"
         fontChangedTo(fontName)
         
 //        let fontFileName = "com.emiaostein.fonts.zaozigongfang.miaomiao"
