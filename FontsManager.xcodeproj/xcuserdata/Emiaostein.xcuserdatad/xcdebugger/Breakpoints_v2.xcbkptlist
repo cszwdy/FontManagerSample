@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FontsManager/ViewController.swift"
-            timestampString = "482045196.990149"
+            timestampString = "482227857.763804"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "fontChangedBy(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FontsManager/ViewController.swift"
-            timestampString = "482043653.263601"
+            timestampString = "482227857.763804"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "registerFontByURL()"
             landmarkType = "5">
          </BreakpointContent>
